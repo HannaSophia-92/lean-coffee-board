@@ -3,17 +3,17 @@ import { FaPlusCircle } from 'react-icons/fa';
 
 export default function FormEntry({ entry, placeholder, newEntry, onChange }) {
   return (
-    <FormEenty onSubmit={handleSubmit}>
-      <label htmlFor={entry}></label>
+    <FormEenty aria-labelledby="newEntry" onSubmit={handleSubmit}>
+      <label htmlFor="entry">New Entry</label>
       <Input
         type="text"
-        id={entry}
+        id="entry"
         name={entry}
         placeholder="Add lean coffee note"
         value={newEntry}
         onChange={onChange}
       ></Input>
-      <Button>
+      <Button aria-label="Add entry">
         <FaPlusCircle />
       </Button>
     </FormEenty>
