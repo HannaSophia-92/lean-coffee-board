@@ -1,19 +1,23 @@
 import styled from 'styled-components';
 import { FaPlusCircle } from 'react-icons/fa';
+import { useState } from 'react';
 
-export default function FormEntry({ entry, placeholder, newEntry, onChange }) {
+export default function FormEntry({ newEntry, onClick }) {
+  const [entry, setEntry] = useState('');
+
   return (
-    <FormEenty aria-labelledby="newEntry" onSubmit={handleSubmit}>
-      <label htmlFor="entry">New Entry</label>
+    <FormEenty aria-labelledby="form-entry" onSubmit={handleSubmit}>
+      <Label htmlFor="form-entry">New Entry</Label>
       <Input
         type="text"
-        id="entry"
-        name={entry}
+        id="form-entry"
+        name="entry"
         placeholder="Add lean coffee note"
-        value={newEntry}
-        onChange={onChange}
+        value={entry}
+        onChange={event => setEntry(event.target.value)}
+        autoComplete="off"
       ></Input>
-      <Button aria-label="Add entry">
+      <Button aria-label="Add entry" onClick={onClick}>
         <FaPlusCircle />
       </Button>
     </FormEenty>
@@ -21,13 +25,14 @@ export default function FormEntry({ entry, placeholder, newEntry, onChange }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    setEntry('');
   }
 }
 
 const FormEenty = styled.form`
   display: flex;
   align-items: center;
-  background-color: #332f2f;
+  background-color: white;
   width: 100%;
   padding: 16px;
 `;
@@ -38,15 +43,22 @@ const Input = styled.input`
   color: white;
   width: inherit;
   &::placeholder {
-    color: white;
+    color: #332f2f;
     text-transform: uppercase;
     font-weight: bold;
   }
 `;
 
 const Button = styled.button`
+  display: flex;
+  align-items: center;
   background-color: transparent;
   border: none;
-  color: white;
-  font-size: 1.8em;
+  color: #332f2f;
+  font-size: 1.6em;
+  margin: 10px;
+`;
+
+const Label = styled.label`
+  text-indent: -100em;
 `;

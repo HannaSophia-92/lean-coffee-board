@@ -6,9 +6,9 @@ describe('GameForm', () => {
     render(<FormEntry />);
 
     const entryInput = screen.getByLabelText(/new entry/i);
-    const submitButton = screen.getAllByRole('button');
+    const submitButton = screen.getByRole('button', { name: /add entry/i });
 
     expect(entryInput).toBeInTheDocument();
-    expect(submitButton).toHaveLength(1);
+    expect(submitButton).toBeInTheDocument();
   });
 });

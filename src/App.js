@@ -20,6 +20,7 @@ export default function App() {
     <AppLayout>
       <Header>Lean Coffee Board</Header>
       <Grid role="list">
+        <Title>Lean Coffee</Title>
         {entries.map(({ text, author }, index) => (
           <li key={index}>
             <Entry text={text} author={author} />
@@ -38,11 +39,8 @@ const AppLayout = styled.main`
 `;
 
 const Grid = styled.ul`
-  display: grid;
-  gap: 20px;
   list-style: none;
   padding: 0;
-  margin: 20px;
   overflow-y: auto;
 `;
 
@@ -53,4 +51,12 @@ const Header = styled.h1`
   color: white;
   font-family: 'Nothing You Could Do', cursive;
   padding: 15px;
+`;
+
+const Title = styled.h2`
+  font-size: 1.6em;
+  border-top: 2px solid #332f2f;
+  padding: 15px;
+  margin: 15px;
+  color: #332f2f;
 `;

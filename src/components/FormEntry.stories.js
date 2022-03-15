@@ -3,6 +3,10 @@ import FormEntry from './FormEntry';
 export default {
   title: 'components/FormEntry',
   component: FormEntry,
+  argTypes: {
+    onSubmit: 'handleSubmit',
+    onClick: { onClick: { action: 'onSubmit' } },
+  },
 };
 
 const Template = args => <FormEntry {...args} />;
