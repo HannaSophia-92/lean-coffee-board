@@ -3,12 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
   * {
     box-sizing: border-box;
+    margin: 0;
   }
 
   body {
-    margin: 12px;
+    font-family: 'Fredoka', sans-serif;
     font-family: sans-serif;
     font-size: 112.5%;
+    
   }
 
   input, label, button, textarea {
