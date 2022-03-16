@@ -40,10 +40,14 @@ const FormEntry = styled.form`
 `;
 
 const Input = styled.input`
+  display: flex;
+  align-items: center;
   border: none;
   background: none;
   color: #332f2f;
   width: inherit;
+  height: 30px;
+  box-shadow: 0 -5px 5px -5px lightgray;
   &::placeholder {
     color: #332f2f;
     text-transform: uppercase;
@@ -58,5 +62,9 @@ const Button = styled.button`
   border: none;
   color: #332f2f;
   font-size: 1.6em;
-  margin: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #00beb7;
+  }
 `;
