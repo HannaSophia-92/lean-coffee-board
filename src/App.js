@@ -1,28 +1,29 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Entry from './components/Entry';
 import EntryForm from './components/EntryForm';
+import useSWR from 'swr';
+
+const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 export default function App() {
-  const [entries, setEntries] = useState([]);
+  const {
+    data: entries,
+    error: entriesError,
+    mutate: mutateEntries,
+  } = useSWR('/api/entries', fetcher, {
+    refreshInterval: 1000,
+  });
 
-  useEffect(() => {
-    getEntries();
-
-    async function getEntries() {
-      const response = await fetch('/api/entries');
-      const entries = await response.json();
-      setEntries(entries);
-    }
-  }, []);
+  if (entriesError) return <h1>Sorry, could not fetch</h1>;
+  if (!entries) return <em>... loading ...</em>;
 
   return (
     <AppLayout>
       <Header>Lean Coffee Board</Header>
       <Grid role="list">
         <Title>Lean Coffee</Title>
-        {entries.map(({ text, author }, index) => (
-          <li key={index}>
+        {entries.map(({ text, author, _id }) => (
+          <li key={_id}>
             <Entry text={text} author={author} />
           </li>
         ))}
@@ -32,19 +33,21 @@ export default function App() {
   );
 
   async function handleNewEntry(text) {
-    const response = await fetch('/api/entries', {
+    const newEntry = {
+      text,
+      author: 'Anonymous',
+    };
+
+    mutateEntries([...entries, newEntry], false);
+
+    await fetch('/api/entries', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        text,
-        author: 'Anonymous',
-      }),
+      body: JSON.stringify(newEntry),
     });
-    const newEntry = await response.json();
-    setEntries([...entries, newEntry]);
-    console.log(newEntry);
+    mutateEntries();
   }
 }
 
