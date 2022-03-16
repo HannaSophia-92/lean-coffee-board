@@ -12,7 +12,7 @@ export default function EntryForm({ onSubmit }) {
         type="text"
         id="entry-text"
         name="entryText"
-        placeholder="Add lean coffee note"
+        placeholder="Add lean coffee note..."
         autoComplete="off"
       ></Input>
       <Button id="entry-form">
