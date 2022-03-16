@@ -37,6 +37,7 @@ export default function App() {
     const newEntry = {
       text,
       author: 'Anonymous',
+      tempId: Math.random(),
     };
 
     mutateEntries([...entries, newEntry], false);
