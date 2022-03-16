@@ -13,6 +13,6 @@ describe('EntryForm', () => {
     const input = screen.getByLabelText(/entry text/i);
     userEvent.type(input, 'Lorem ipsum dolor sit.{enter}');
     expect(form).toContainElement(input);
-    expect(callback).toHaveBeenCalledWith({ text: 'Lorem ipsum dolor sit.' });
+    expect(callback).toHaveBeenCalledWith('Lorem ipsum dolor sit.');
   });
 });

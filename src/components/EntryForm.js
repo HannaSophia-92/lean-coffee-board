@@ -26,7 +26,7 @@ export default function EntryForm({ onSubmit }) {
     event.preventDefault();
     const form = event.target;
     const inputElement = form.elements.entryText;
-    onSubmit({ text: inputElement.value });
+    onSubmit(inputElement.value);
   }
 }
 
@@ -41,7 +41,7 @@ const FormEntry = styled.form`
 const Input = styled.input`
   border: none;
   background: none;
-  color: white;
+  color: #332f2f;
   width: inherit;
   &::placeholder {
     color: #332f2f;

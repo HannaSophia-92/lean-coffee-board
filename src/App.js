@@ -27,9 +27,25 @@ export default function App() {
           </li>
         ))}
       </Grid>
-      <EntryForm />
+      <EntryForm onSubmit={handleNewEntry} />
     </AppLayout>
   );
+
+  async function handleNewEntry(text) {
+    const response = await fetch('/api/entries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text,
+        author: 'Anonymous',
+      }),
+    });
+    const newEntry = await response.json();
+    setEntries([...entries, newEntry]);
+    console.log(newEntry);
+  }
 }
 
 const AppLayout = styled.main`
