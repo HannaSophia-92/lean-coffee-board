@@ -1,35 +1,56 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Entry from './components/Entry';
-import FormEntry from './components/FormEntry';
+import EntryForm from './components/EntryForm';
+import useSWR from 'swr';
+
+const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 export default function App() {
-  const [entries, setEntries] = useState([]);
+  const {
+    data: entries,
+    error: entriesError,
+    mutate: mutateEntries,
+  } = useSWR('/api/entries', fetcher, {
+    refreshInterval: 1000,
+  });
 
-  useEffect(() => {
-    getEntries();
-
-    async function getEntries() {
-      const response = await fetch('/api/entries');
-      const entries = await response.json();
-      setEntries(entries);
-    }
-  }, []);
+  if (entriesError) return <h1>Sorry, could not fetch</h1>;
 
   return (
     <AppLayout>
       <Header>Lean Coffee Board</Header>
-      <Grid role="list">
+      <EntryList role="list">
         <Title>Lean Coffee</Title>
-        {entries.map(({ text, author }, index) => (
-          <li key={index}>
-            <Entry text={text} author={author} />
-          </li>
-        ))}
-      </Grid>
-      <FormEntry />
+        {entries
+          ? entries.map(({ text, author, _id }) => (
+              <li key={_id}>
+                <Entry text={text} author={author} />
+              </li>
+            ))
+          : '... loading ...'}
+      </EntryList>
+      <EntryForm onSubmit={handleNewEntry} />
     </AppLayout>
   );
+
+  async function handleNewEntry(text) {
+    const newEntry = {
+      text,
+      author: 'Anonymous',
+      tempId: Math.random(),
+    };
+
+    mutateEntries([...entries, newEntry], false);
+
+    await fetch('/api/entries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newEntry),
+    });
+    mutateEntries();
+  }
 }
 
 const AppLayout = styled.main`
@@ -38,7 +59,7 @@ const AppLayout = styled.main`
   height: 100vh;
 `;
 
-const Grid = styled.ul`
+const EntryList = styled.ul`
   list-style: none;
   padding: 0;
   overflow-y: auto;
