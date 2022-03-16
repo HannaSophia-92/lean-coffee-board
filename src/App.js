@@ -15,19 +15,20 @@ export default function App() {
   });
 
   if (entriesError) return <h1>Sorry, could not fetch</h1>;
-  if (!entries) return <em>... loading ...</em>;
 
   return (
     <AppLayout>
       <Header>Lean Coffee Board</Header>
-      <Grid role="list">
+      <EntryList role="list">
         <Title>Lean Coffee</Title>
-        {entries.map(({ text, author, _id }) => (
-          <li key={_id}>
-            <Entry text={text} author={author} />
-          </li>
-        ))}
-      </Grid>
+        {entries
+          ? entries.map(({ text, author, _id }) => (
+              <li key={_id}>
+                <Entry text={text} author={author} />
+              </li>
+            ))
+          : '... loading ...'}
+      </EntryList>
       <EntryForm onSubmit={handleNewEntry} />
     </AppLayout>
   );
@@ -57,7 +58,7 @@ const AppLayout = styled.main`
   height: 100vh;
 `;
 
-const Grid = styled.ul`
+const EntryList = styled.ul`
   list-style: none;
   padding: 0;
   overflow-y: auto;
