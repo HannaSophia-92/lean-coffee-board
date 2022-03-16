@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Entry from './components/Entry';
-import FormEntry from './components/FormEntry';
+import EntryForm from './components/EntryForm';
 
 export default function App() {
   const [entries, setEntries] = useState([]);
@@ -27,7 +27,7 @@ export default function App() {
           </li>
         ))}
       </Grid>
-      <FormEntry />
+      <EntryForm />
     </AppLayout>
   );
 }

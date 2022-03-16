@@ -1,35 +1,36 @@
 import styled from 'styled-components';
 import { FaPlusCircle } from 'react-icons/fa';
-import { useState } from 'react';
+import ScreenReaderOnly from './ScreenReaderOnly';
 
-export default function FormEntry({ newEntry, onClick }) {
-  const [entry, setEntry] = useState('');
-
+export default function EntryForm({ onSubmit }) {
   return (
-    <FormEenty aria-labelledby="form-entry" onSubmit={handleSubmit}>
-      <Label htmlFor="form-entry">New Entry</Label>
+    <FormEntry aria-labelledby="entry-form" onSubmit={handleSubmit}>
+      <label htmlFor="entry-text">
+        <ScreenReaderOnly>Entry text</ScreenReaderOnly>
+      </label>
       <Input
         type="text"
-        id="form-entry"
-        name="entry"
+        id="entry-text"
+        name="entryText"
         placeholder="Add lean coffee note"
-        value={entry}
-        onChange={event => setEntry(event.target.value)}
         autoComplete="off"
       ></Input>
-      <Button aria-label="Add entry" onClick={onClick}>
+      <Button id="entry-form">
+        <ScreenReaderOnly>Create new entry</ScreenReaderOnly>
         <FaPlusCircle />
       </Button>
-    </FormEenty>
+    </FormEntry>
   );
 
   function handleSubmit(event) {
     event.preventDefault();
-    setEntry('');
+    const form = event.target;
+    const inputElement = form.elements.entryText;
+    onSubmit({ text: inputElement.value });
   }
 }
 
-const FormEenty = styled.form`
+const FormEntry = styled.form`
   display: flex;
   align-items: center;
   background-color: white;
@@ -57,8 +58,4 @@ const Button = styled.button`
   color: #332f2f;
   font-size: 1.6em;
   margin: 10px;
-`;
-
-const Label = styled.label`
-  text-indent: -100em;
 `;

@@ -1,4 +1,4 @@
-import FormEntry from './FormEntry';
+import FormEntry from './EntryForm';
 
 export default {
   title: 'components/FormEntry',
