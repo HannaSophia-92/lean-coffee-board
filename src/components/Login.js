@@ -11,6 +11,7 @@ export default function Login({ onSubmit }) {
           name="name"
           placeholder="Add your Name"
           autoComplete="off"
+          minLength="3"
           required
         />
         <label htmlFor="color">Choose a color</label>
@@ -18,6 +19,7 @@ export default function Login({ onSubmit }) {
           type="color"
           id="color"
           name="color"
+          defaultValue="#00beb7"
           placeholder="Choose a color"
         />
         <button id="login-form">Save</button>
