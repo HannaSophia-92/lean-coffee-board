@@ -10,6 +10,7 @@ export default function Entry({ text, author, color }) {
 }
 
 const Card = styled.section`
+  word-wrap: break-word;
   margin: 20px;
   padding: 20px;
   max-width: 400px;

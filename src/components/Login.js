@@ -38,9 +38,9 @@ export default function Login({ onSubmit }) {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 300px;
+  gap: 15px;
   padding: 20px;
+  border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -49,5 +49,5 @@ const Form = styled.form`
 const Box = styled.div`
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 `;

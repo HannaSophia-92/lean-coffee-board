@@ -24,19 +24,23 @@ export default function App() {
   return (
     <AppLayout>
       <Header>Lean Coffee Board</Header>
+      {!userName && <Login onSubmit={handleLogin} />}
+      {userName && (
+        <>
+          <EntryList role="list">
+            <Title>Lean Coffee</Title>
 
-      <EntryList role="list">
-        <Title>Lean Coffee</Title>
-        <Login onSubmit={handleLogin} />
-        {entries
-          ? entries.map(({ text, author, _id, tempId, color }) => (
-              <li key={_id ?? tempId}>
-                <Entry text={text} author={author} color={color} />
-              </li>
-            ))
-          : '... loading ...'}
-      </EntryList>
-      <EntryForm onSubmit={handleNewEntry} />
+            {entries
+              ? entries.map(({ text, author, _id, tempId, color }) => (
+                  <li key={_id ?? tempId}>
+                    <Entry text={text} author={author} color={color} />
+                  </li>
+                ))
+              : '... loading ...'}
+          </EntryList>
+          <EntryForm onSubmit={handleNewEntry} />
+        </>
+      )}
     </AppLayout>
   );
 
