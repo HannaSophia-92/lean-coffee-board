@@ -2,10 +2,15 @@ import styled from 'styled-components';
 import Entry from './components/Entry';
 import EntryForm from './components/EntryForm';
 import useSWR from 'swr';
+import Login from './components/Login';
+import { useState } from 'react';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 export default function App() {
+  const [userName, setUserName] = useState('');
+  const [userColor, setUserColor] = useState('');
+
   const {
     data: entries,
     error: entriesError,
@@ -19,24 +24,40 @@ export default function App() {
   return (
     <AppLayout>
       <Header>Lean Coffee Board</Header>
-      <EntryList role="list">
-        <Title>Lean Coffee</Title>
-        {entries
-          ? entries.map(({ text, author, _id }) => (
-              <li key={_id}>
-                <Entry text={text} author={author} />
-              </li>
-            ))
-          : '... loading ...'}
-      </EntryList>
-      <EntryForm onSubmit={handleNewEntry} />
+      {!userName && <Login onSubmit={handleLogin} />}
+      {userName && (
+        <>
+          <EntryList role="list">
+            <Title>Lean Coffee</Title>
+
+            {entries
+              ? entries.map(({ text, author, _id, tempId, color }) => (
+                  <li key={_id ?? tempId}>
+                    <Entry text={text} author={author} color={color} />
+                  </li>
+                ))
+              : '... loading ...'}
+          </EntryList>
+          <EntryForm onSubmit={handleNewEntry} />
+        </>
+      )}
     </AppLayout>
   );
 
+  function handleLogin(name, color) {
+    const newUser = name;
+    setUserName(newUser);
+    console.log(userName);
+    const newUserColor = color;
+    setUserColor(newUserColor);
+    console.log(userColor);
+  }
+
   async function handleNewEntry(text) {
     const newEntry = {
-      text,
-      author: 'Anonymous',
+      text: text,
+      author: userName,
+      color: userColor,
       tempId: Math.random(),
     };
 
