@@ -1,23 +1,52 @@
 import styled from 'styled-components';
+import { TiDeleteOutline } from 'react-icons/ti';
 
-export default function Entry({ text, author, color }) {
+export default function Entry({ text, author, color, date }) {
   return (
     <Card>
-      <p>{text}</p>
+      <Date>{date}</Date>
+      <Text>{text}</Text>
       <Author color={color}>{author}</Author>
+      <Delete>
+        <TiDeleteOutline />
+      </Delete>
     </Card>
   );
 }
 
 const Card = styled.section`
-  word-wrap: break-word;
-  margin: 20px;
+  display: grid;
+  grid-template-rows: 20% 60% 20%;
+  align-content: space-between;
   padding: 20px;
-  max-width: 400px;
+  height: 100%;
+  padding: 20px;
+  position: relative;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
 
 const Author = styled.p`
   color: ${({ color }) => (color ? color : '#999')};
+`;
+
+const Text = styled.p`
+  word-break: break-all;
+`;
+
+const Date = styled.small`
+  text-align: end;
+  color: lightgray;
+`;
+
+const Delete = styled.span`
+  text-align: end;
+  font-size: 1.2em;
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  cursor: pointer;
+  &&:hover {
+    color: #00beb7;
+  }
 `;

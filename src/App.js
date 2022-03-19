@@ -4,6 +4,7 @@ import EntryForm from './components/EntryForm';
 import useSWR from 'swr';
 import Login from './components/Login';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -28,12 +29,15 @@ export default function App() {
       {userName && (
         <>
           <EntryList role="list">
-            <Title>Lean Coffee</Title>
-
             {entries
-              ? entries.map(({ text, author, _id, tempId, color }) => (
+              ? entries.map(({ text, author, _id, tempId, color, date }) => (
                   <li key={_id ?? tempId}>
-                    <Entry text={text} author={author} color={color} />
+                    <Entry
+                      text={text}
+                      author={author}
+                      color={color}
+                      date={date}
+                    />
                   </li>
                 ))
               : '... loading ...'}
@@ -59,6 +63,7 @@ export default function App() {
       author: userName,
       color: userColor,
       tempId: Math.random(),
+      date: dayjs().format('DD-MM-YY HH:mm'),
     };
 
     mutateEntries([...entries, newEntry], false);
@@ -74,31 +79,25 @@ export default function App() {
   }
 }
 
-const AppLayout = styled.main`
+const AppLayout = styled.div`
   display: grid;
   grid-template-rows: 64px auto 64px;
   height: 100vh;
 `;
 
 const EntryList = styled.ul`
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+  margin: 20px;
   list-style: none;
-  padding: 0;
   overflow-y: auto;
 `;
 
 const Header = styled.h1`
-  display: flex;
-  align-items: center;
   background-color: #00beb7;
   color: white;
   font-family: 'Nothing You Could Do', cursive;
   padding: 15px;
-`;
-
-const Title = styled.h2`
-  font-size: 1.6em;
-  border-top: 2px solid #332f2f;
-  padding: 15px;
-  margin: 15px;
-  color: #332f2f;
 `;
