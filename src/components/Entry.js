@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { TiDeleteOutline } from 'react-icons/ti';
+import dayjs from 'dayjs';
 
-export default function Entry({ text, author, color, date }) {
+export default function Entry({ text, author, color, createdAt }) {
   return (
     <Card>
-      <Date>{date}</Date>
+      <Date>{dayjs(createdAt).format('DD-MM-YY HH:mm')}</Date>
       <Text>{text}</Text>
       <Author color={color}>{author}</Author>
       <Delete>

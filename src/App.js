@@ -4,7 +4,6 @@ import EntryForm from './components/EntryForm';
 import useSWR from 'swr';
 import Login from './components/Login';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -30,16 +29,18 @@ export default function App() {
         <>
           <EntryList role="list">
             {entries
-              ? entries.map(({ text, author, _id, tempId, color, date }) => (
-                  <li key={_id ?? tempId}>
-                    <Entry
-                      text={text}
-                      author={author}
-                      color={color}
-                      date={date}
-                    />
-                  </li>
-                ))
+              ? entries.map(
+                  ({ text, author, _id, tempId, color, createdAt }) => (
+                    <li key={_id ?? tempId}>
+                      <Entry
+                        text={text}
+                        author={author}
+                        color={color}
+                        createdAt={createdAt}
+                      />
+                    </li>
+                  )
+                )
               : '... loading ...'}
           </EntryList>
           <EntryForm onSubmit={handleNewEntry} />
@@ -63,7 +64,6 @@ export default function App() {
       author: userName,
       color: userColor,
       tempId: Math.random(),
-      date: dayjs().format('DD-MM-YY HH:mm'),
     };
 
     mutateEntries([...entries, newEntry], false);
