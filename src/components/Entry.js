@@ -77,6 +77,7 @@ const CheckBox = styled.div`
   input[type='checkbox'] {
     width: 15px;
     height: 15px;
+    color: hotpink;
   }
   position: absolute;
   bottom: 40px;
