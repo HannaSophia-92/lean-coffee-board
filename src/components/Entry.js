@@ -24,7 +24,7 @@ export default function Entry({
           onChange={onCheck}
           id={'mark-done' + _id}
           type="checkbox"
-        ></input>
+        />
       </CheckBox>
       <Date>{dayjs(createdAt).format('DD-MM-YY HH:mm')}</Date>
       <Text>{text}</Text>
@@ -68,11 +68,17 @@ const Delete = styled.span`
   right: 10px;
   bottom: 5px;
   cursor: pointer;
-  &&:hover {
+  &:hover {
     color: #00beb7;
   }
 `;
 
 const CheckBox = styled.div`
+  input[type='checkbox'] {
+    width: 15px;
+    height: 15px;
+  }
   position: absolute;
+  bottom: 40px;
+  right: 14px;
 `;

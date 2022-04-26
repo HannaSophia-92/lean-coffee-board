@@ -53,10 +53,8 @@ export default function App() {
   function handleLogin(name, color) {
     const newUser = name;
     setUserName(newUser);
-    console.log(userName);
     const newUserColor = color;
     setUserColor(newUserColor);
-    console.log(userColor);
   }
 
   async function handleNewEntry(text) {
